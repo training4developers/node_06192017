@@ -2,7 +2,8 @@
 
 const person = {
   id: 2,
-  firstName: 'Bob'
+  firstName: 'Bob',
+  lastName: 'Smith'
 };
 
 

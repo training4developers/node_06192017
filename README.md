@@ -8,12 +8,12 @@ Eric Greene - [http://t4d.io](http://t4d.io) - [LinkedIn](https://www.linkedin.c
 
 Class:
 
-- Monday - Wednesday: 8:30am to 4:15pm
+- Monday - Wednesday: 8:30am to 4:30pm
 
 Breaks:
 
-- Morning: 10am to 10:15am
-- Lunch: Noon to 12:45pm
+- Morning: 10:15am to 10:30am
+- Lunch: Noon to 1pm
 - Afternoon: 2:45pm to 3:00pm
 
 ## Course Outline
