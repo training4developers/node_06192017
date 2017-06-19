@@ -4,7 +4,7 @@ const person = {
   id: 2,
   firstName: 'Bob',
   lastName: 'Smith',
-  age: 34
+  age: 34,
 };
 
 
