@@ -1,0 +1,28 @@
+1. Create a new module
+2. Export function getPerson(personId), function savePerson(person) both return a promise
+and for getPerson, return the data through the then function 
+3. Person object shape: { id, firstName, lastName }
+4. Create a person.json file
+
+[
+	{
+		"id": 1,
+		"firstName": "Bob",
+		"lastName": "Smith"
+	},
+	{
+		"id": 2,
+		"firstName": "Jane",
+		"lastName": "Smith"
+	}
+]
+
+'use strict';
+
+const { getPerson, savePerson } = require('./person');
+
+getPerson(1).then(person => console.log(person));
+savePerson({
+  firstName: 'Tim',
+  lastName: 'Rollins'
+}).then(() => console.log('person saved'));

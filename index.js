@@ -35,7 +35,7 @@ const logger = msg => {
 
   getConfig().then(config => {
 
-    fs.writeFile(config.logfile, msg, 'utf8', (err) => {
+    fs.appendFile(config.logfile, msg, 'utf8', (err) => {
       if (err) {
         console.log(err);
         return;
