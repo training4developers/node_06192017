@@ -1,19 +1,9 @@
 'use strict';
 
-function outer() {
+const dns = require('dns');
 
-  let t = 5;
+dns.resolve('google.com', 'MX', (err, records) => {
 
-  setTimeout(function() {
-    t = 10;
-  }, 2000);
+  console.log(records);
 
-  return function inner() {
-    console.log(t);
-  };
-}
-const fn = outer();
-fn();
-setTimeout(function () { fn(); }, 4000);
-
-
+});

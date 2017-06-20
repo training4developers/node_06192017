@@ -12,8 +12,6 @@
     "sourceType": "script",
     "ecmaFeatures": {
       "globalReturn": false,
-      "impliedStrict": true,
-      "jsx": false,
       "experimentalObjectRestSpread": true
     }
   },
@@ -34,6 +32,6 @@
       "always"
     ],
     "no-console": 0,
-    "strict": 1
+    "strict": ["error", "global"]
   }
 }
