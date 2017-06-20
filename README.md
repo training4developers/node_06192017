@@ -39,7 +39,6 @@ JavaScript topics will be included as needed into the AngularJS content
 - [NPM](https://www.npmjs.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS)
-- [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS)
 - [JavaScript Air Podcast](http://javascriptair.podbean.com/)
 - [Speaking JavaScript](http://speakingjs.com/es5/)
 - [TC39 Process - Feature Stages](http://www.2ality.com/2015/11/tc39-process.html)
