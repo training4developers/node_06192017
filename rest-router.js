@@ -24,5 +24,4 @@ const createRestRouter = db => {
   return restRouter;
 };
 
-
 module.exports = createRestRouter;

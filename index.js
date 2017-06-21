@@ -6,8 +6,10 @@ const http = require('http');
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const config = require('./config.json');
+
 require('./start-up')(config).then(() => {
 
   const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
@@ -29,7 +31,8 @@ require('./start-up')(config).then(() => {
   const app = express();
   const server = http.createServer(app);
 
-  // app.use(passport.authenticate('jwt', { session: false }));
+  app.use(cors());
+  app.use(passport.authenticate('jwt', { session: false }));
   app.use(config.endPoint, bodyParser.json());
   app.use(`${config.endPoint}/widgets`, widgetRouter);
 
@@ -39,6 +42,5 @@ require('./start-up')(config).then(() => {
 
   process.on('exit', () => console.log('rest service exiting'.magenta));
   process.on('SIGINT', () => process.exit());
-
 
 });

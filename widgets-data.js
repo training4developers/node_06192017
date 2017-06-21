@@ -12,11 +12,10 @@ module.exports = class WidgetsData {
     this._dbAll = promisify(this._db.all).bind(this._db);
     this._dbGet = promisify(this._db.get).bind(this._db);
 
-    this._dbInsertStmt = this._db.prepare(`
+    this._insertSQL = `
       insert into widgets (name, description, color, size, quantity)
       values (?, ?, ?, ?, ?)
-    `);
-    this._dbInsertRun =  promisify(this._dbInsertStmt.run).bind(this._dbInsertStmt);
+    `;
 
     if (typeof process != 'undefined') {
       process.on('exit', () => {
@@ -36,11 +35,24 @@ module.exports = class WidgetsData {
 
   insert(widget) {
 
-    let { name, description, color, size, quantity } = widget;
+    const { name, description, color, size, quantity } = widget;
+    const dbInsertStmt = this._db.prepare(this._insertSQL);
 
-    this._dbInsertRun(name, description, color, size, quantity)
-      .then(() => Object.assign(widget, { id: this.lastID }));
-    this._dbInsertStmt.finalize();
+    const insertPromise = new Promise( (resolve, reject) =>
+      dbInsertStmt.run(name, description, color, size, quantity, function(err) {
+
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(Object.assign(widget, { id: this.lastID }));
+        
+      }));
+
+    dbInsertStmt.finalize();
+
+    return insertPromise;
   }
 
   // TODO - implement replace operation
