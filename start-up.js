@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 
 const initDb = dbFileName => {
 
