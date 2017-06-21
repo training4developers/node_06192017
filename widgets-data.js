@@ -1,6 +1,6 @@
 'use strict';
 
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 const { promisify } = require('util');
 
 module.exports = class WidgetsData {
@@ -19,7 +19,7 @@ module.exports = class WidgetsData {
 
     if (typeof process != 'undefined') {
       process.on('exit', () => {
-        console.log('closing database'.magenta);
+        console.log(`closing database on worker ${process.pid}`.magenta);
         this._db.close();
       });
     }
@@ -47,7 +47,7 @@ module.exports = class WidgetsData {
         }
 
         resolve(Object.assign(widget, { id: this.lastID }));
-        
+
       }));
 
     dbInsertStmt.finalize();

@@ -12,7 +12,7 @@ const initDb = dbFileName => {
       // file does not exist
       if (err) {
 
-        console.log('creating database'.green);
+        console.log(`creating database on process ${process.pid}`.green);
 
         const db = new sqlite3.Database(dbFileName);
         db.serialize(() => {
@@ -33,7 +33,7 @@ const initDb = dbFileName => {
         });
 
       } else {
-        console.info('using existing database'.yellow);
+        console.info(`using existing database on process ${process.pid}`.yellow);
         resolve();
       }
 
