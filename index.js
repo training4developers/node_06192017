@@ -1,52 +1,44 @@
 'use strict';
 
-const fs = require('fs');
-const util = require('util');
+require('colors');
 
-// const promisify = asyncFn => {
-//   return (...params) => {
-//     return new Promise((resolve, reject) => {
-//       params.push((err, ...data) => {
-//         if (err) {
-//           reject(err);
-//           return;
-//         }
-//         resolve(data.length === 1 ? data[0] : data);
-//       });
-//       asyncFn(...params);
-//     });
-//   };
-// };
+const http = require('http');
+const express = require('express');
+const passport = require('passport');
+const bodyParser = require('body-parser');
 
-const readFile = util.promisify(fs.readFile);
+const config = require('./config.json');
+require('./start-up')(config).then(() => {
 
-const getConfig = () => {
+  const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
-  if (!getConfig._p) {
-    console.log('reading the config file');
-    getConfig._p = readFile('./config.json', 'utf8')
-      .then(data => JSON.parse(data));
-  }
+  const jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeader(),
+    secretOrKey: 'secret',
+    algorithms: ['HS256']
+  };
 
-  return getConfig._p;
-};
+  passport.use(new JwtStrategy(jwtOptions, (jwtPayload, done) => {
+    done(null, { name: jwtPayload.name });
+  }));
 
-const logger = msg => {
+  const WidgetsData = require('./widgets-data');
+  const widgetsData = new WidgetsData(config.dbFileName);
+  const widgetRouter = require('./rest-router')(widgetsData);
 
-  getConfig().then(config => {
+  const app = express();
+  const server = http.createServer(app);
 
-    fs.appendFile(config.logfile, msg, 'utf8', (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-    });
+  // app.use(passport.authenticate('jwt', { session: false }));
+  app.use(config.endPoint, bodyParser.json());
+  app.use(`${config.endPoint}/widgets`, widgetRouter);
 
+  server.listen(config.port, () => {
+    console.log(`rest service running on port ${config.port}`.blue);
   });
 
-};
-
-logger('hope this works!!');
-logger('hope this works!!');
+  process.on('exit', () => console.log('rest service exiting'.magenta));
+  process.on('SIGINT', () => process.exit());
 
 
+});
